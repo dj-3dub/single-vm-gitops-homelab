@@ -1,0 +1,34 @@
+digraph Homelab {
+  rankdir=LR; fontname="Arial"; fontsize=11;
+  node [shape=box, style="rounded,filled", fillcolor="#f6f8fa", fontname="Arial", fontsize=11];
+  edge [fontname="Arial", fontsize=10];
+
+  subgraph cluster_vm {
+    label="Ubuntu 24.04 VM  •  192.168.2.60";
+    color="#c9d1d9";
+
+    k3s     [label="k3s (API, kubelet, containerd)"];
+    traefik [label="Traefik Ingress"];
+    argocd  [label="Argo CD"];
+    grafana [label="Grafana"];
+    prom    [label="Prometheus"];
+    loki    [label="Loki"];
+    promtail[label="Promtail (DaemonSet)"];
+    whoami  [label="whoami demo"];
+
+    k3s -> traefik;
+    traefik -> argocd  [label="Host: argocd.pizza"];
+    traefik -> grafana [label="Host: grafana.pizza"];
+    traefik -> whoami  [label="Host: whoami.pizza"];
+    promtail -> loki   [label="logs"];
+    prom -> grafana    [label="metrics"];
+  }
+
+  client [shape=ellipse, label="Workstation"];
+  dns    [shape=box, style="rounded,dashed", label="Pi-hole or /etc/hosts"];
+
+  dns -> client [label="DNS A records\n→ 192.168.2.60"];
+  client -> traefik [label="HTTP/HTTPS"];
+  github [shape=box, style="rounded,dashed", label="GitHub Repo\n(GitOps)"];
+  github -> argocd  [label="sync"];
+}
