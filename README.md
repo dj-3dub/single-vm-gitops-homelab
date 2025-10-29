@@ -12,7 +12,7 @@ This project turns a single Ubuntu VM into a fully functional homelab environmen
 Ideal for experimenting with infrastructure, self‑hosting, Kubernetes, observability, and GitOps — on one machine.
 
 ## 🧱 Architecture  
-![Homelab Architecture (Single‑VM K3s)](docs/images/architecture.png)  
+![Homelab Architecture (Single‑VM K3s)](docs/homelab.svg)  
 
 The setup includes a single Ubuntu VM (static IP), running:  
 - K3s single‑node cluster  
